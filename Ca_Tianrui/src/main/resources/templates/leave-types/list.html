@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Leave Type List</title>
+</head>
+<body>
+    <h1>Leave Type List</h1>
+
+    <h2>Add New Leave Type</h2>
+    <form th:action="@{/leave-types}" th:object="${leaveType}" method="post">
+        <div>
+            <label>ID:</label>
+            <select th:field="*{id}">
+                <option th:each="employee : ${employees}" th:value="${employee.empId}" th:text="${employee.empId + ' - ' + employee.firstName + ' ' + employee.lastName}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Type Name:</label>
+            <select th:field="*{typeName}">
+                <option value="annual">Annual</option>
+                <option value="medical">Medical</option>
+                <option value="compensation">Compensation</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+     
+    <h2>Leave Type List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="leaveType : ${leaveTypes}">
+                <td th:text="${leaveType.id}">ID</td>
+                <td th:text="${leaveType.typeName}">Type Name</td>
+                <td>
+                    <a th:href="@{/leave-types/delete/{id}(id=${leaveType.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/employees"><button>Back To Staff List</button></a>
+    </div>
+</body>
+</html>

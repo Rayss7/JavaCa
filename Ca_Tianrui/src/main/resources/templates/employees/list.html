@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Staff List</title>
+</head>
+<body>
+    <h1>Staff List</h1>
+    
+    <a href="/employees/new">Add New Employee</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Manager ID</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.empId}">ID</td>
+                <td th:text="${employee.firstName}">First Name</td>
+                <td th:text="${employee.lastName}">Last Name</td>
+                <td th:text="${employee.empType.empType}">Position</td> <!-- 只显示职业类型 -->
+                <td th:text="${employee.manager != null ? employee.manager.empId : 'N/A'}">Manager ID</td>
+                <td th:text="${employee.empStatus}">Status</td>
+                <td>
+                    <a th:href="@{/employees/delete/{id}(id=${employee.empId})}">Delete</a>
+                    <a th:href="@{/employees/set-active/{id}/{active}(id=${employee.empId}, active=${employee.empStatus != 'Active'})}">
+                        [[${employee.empStatus == 'Active' ? 'Set Inactive' : 'Set Active'}]]
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a href="/leave-types"><button>Manage Leave Types</button></a>
+    </div>
+</body>
+</html>

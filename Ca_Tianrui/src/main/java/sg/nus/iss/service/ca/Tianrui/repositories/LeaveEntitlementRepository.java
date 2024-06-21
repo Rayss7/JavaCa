@@ -1,0 +1,13 @@
+package sg.nus.iss.service.ca.Tianrui.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import sg.nus.iss.service.ca.Tianrui.entities.LeaveEntitlement;
+
+@Repository
+public interface LeaveEntitlementRepository extends JpaRepository<LeaveEntitlement, String> {
+	@Query(" SELECT l FROM LeaveEntitlement l WHERE l.empType = 'Full-Time'")
+	public LeaveEntitlement findFullTimeLeaveEntitlement();
+}
